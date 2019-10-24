@@ -21,28 +21,28 @@ const Menu = () => {
       price: "5"
     },
     {
-      key: 1,
+      key: 2,
       type: "Main Course",
       name: "Pizza Margherita",
       img: "",
       price: "5"
     },
     {
-      key: 1,
+      key: 3,
       type: "Main Course",
       name: "Pizza Margherita",
       img: "",
       price: "5"
     },
     {
-      key: 1,
+      key: 4,
       type: "Main Course",
       name: "Pizza Margherita",
       img: "",
       price: "5"
     },
     {
-      key: 1,
+      key: 5,
       type: "Main Course",
       name: "Pizza Margherita",
       img: "",

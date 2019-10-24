@@ -64,6 +64,7 @@ export const CustomSelect = styled.select`
   -webkit-appearance: none;
   border-color: #dad7d7;
   cursor: pointer;
+  background-color: #fff;
 
   &:invalid {
     color: grey;

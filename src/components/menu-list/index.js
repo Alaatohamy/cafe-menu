@@ -1,5 +1,6 @@
 import React from "react";
-import { CustomButton } from "components";
+import { Link } from "react-router-dom";
+// import { CustomButton } from "components";
 import {
   MenuHeader,
   MenuList,
@@ -53,7 +54,7 @@ const Menu = () => {
     <section>
       <MenuHeader>
         <h2>Menu</h2>
-        <CustomButton type="button">Add Menu Item</CustomButton>
+        <Link to="/create-new-item">Add Menu Item</Link>
       </MenuHeader>
       <MenuList>
         {menu_data.map(({ key, name, type, img, price }) => (

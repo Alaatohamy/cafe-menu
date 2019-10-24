@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { cols, col__3 } from "styles/general";
+import { LikeBlueButton } from "components/custom-button/custom-button.style";
 
 export const MenuHeader = styled.header`
   margin-block-start: 30px;
@@ -17,8 +18,9 @@ export const MenuHeader = styled.header`
     float: left;
   }
 
-  button {
+  a {
     float: right;
+    ${LikeBlueButton}
   }
 `;
 

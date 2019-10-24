@@ -10,7 +10,7 @@ const blue = css`
   }
 `;
 
-export const Button = styled.button`
+export const LikeBlueButton = css`
   padding: 15px 25px;
   font-size: 20px;
   color: #fff;
@@ -20,6 +20,9 @@ export const Button = styled.button`
   &:focus {
     outline: none;
   }
-
   ${blue}
+`;
+
+export const Button = styled.button`
+  ${LikeBlueButton}
 `;

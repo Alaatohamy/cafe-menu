@@ -53,7 +53,7 @@ const Menu = () => {
     <section>
       <MenuHeader>
         <h2>Menu</h2>
-        <CustomButton>Add Menu Item</CustomButton>
+        <CustomButton type="button">Add Menu Item</CustomButton>
       </MenuHeader>
       <MenuList>
         {menu_data.map(({ key, name, type, img, price }) => (

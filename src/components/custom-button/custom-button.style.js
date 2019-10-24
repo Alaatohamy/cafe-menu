@@ -17,5 +17,9 @@ export const Button = styled.button`
   cursor: pointer;
   border-radius: 5px;
 
+  &:focus {
+    outline: none;
+  }
+
   ${blue}
 `;

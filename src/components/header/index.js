@@ -1,10 +1,13 @@
 import React from "react";
 import { MainHeader, HeaderTitle } from "./header.style";
+import { Container } from "styles/general";
 
 const Header = () => {
   return (
     <MainHeader>
-      <HeaderTitle>Cafe React</HeaderTitle>
+      <Container>
+        <HeaderTitle>Cafe React</HeaderTitle>
+      </Container>
     </MainHeader>
   );
 };

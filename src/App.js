@@ -1,5 +1,6 @@
 import React from "react";
-import { Header, MenuList } from "components";
+import { Route } from "react-router-dom";
+import { Header, MenuList, AddMenuForm } from "components";
 import { Container } from "styles/general";
 import "./App.css";
 
@@ -8,7 +9,8 @@ function App() {
     <div className="App">
       <Header />
       <Container>
-        <MenuList />
+        <Route exact path="/" component={MenuList} />
+        <Route exact path="/create-new-item" component={AddMenuForm} />
       </Container>
     </div>
   );

@@ -1,5 +1,12 @@
 import styled from "styled-components";
-import { cols, col__3 } from "styles/general";
+import {
+  cols,
+  col__3,
+  textColor,
+  primaryColor,
+  secondaryColor,
+  imgDefaultBackgroundColor
+} from "styles/general";
 import { LikeBlueButton } from "components/custom-button/custom-button.style";
 
 export const MenuHeader = styled.header`
@@ -14,7 +21,9 @@ export const MenuHeader = styled.header`
   }
 
   h2 {
+    font-size: 28px;
     font-weight: normal;
+    color: ${textColor};
     float: left;
   }
 
@@ -37,9 +46,9 @@ export const MenuCard = styled.li`
 `;
 
 export const CardData = styled.div`
-  color: grey;
+  color: ${secondaryColor};
   background-color: #fff;
-  padding: 20px;
+  padding: 25px;
   text-transform: capitalize;
   font-size: 20px;
 
@@ -56,15 +65,25 @@ export const CardData = styled.div`
 `;
 
 export const CardImg = styled.div`
-  background-color: #000;
+  background-color: ${imgDefaultBackgroundColor};
   height: 250px;
 `;
 
-export const Type = styled.p`
-  color: #000;
+export const CardName = styled.p`
+  font-size: 18px;
   font-weight: bold;
+  margin: 0;
 `;
 
-export const Price = styled.p`
+export const CardType = styled.p`
+  color: ${primaryColor};
+  font-weight: bold;
+  font-size: 23px;
+  margin: 0;
+`;
+
+export const CardPrice = styled.p`
+  font-size: 22px;
   float: right;
+  margin: 0;
 `;

@@ -1,5 +1,14 @@
 import styled, { css } from "styled-components";
 
+// Export colors
+export const primaryColor = "#4d4f5c";
+export const secondaryColor = "#7c7e89";
+export const buttonColor = "#3b86ff";
+export const imgDefaultBackgroundColor = "#43425d";
+export const textColor = "#43425d";
+export const borderColor = "#bcbcbc";
+
+// Export styling
 export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;

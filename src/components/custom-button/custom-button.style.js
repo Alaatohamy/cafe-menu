@@ -1,18 +1,19 @@
 import styled, { css } from "styled-components";
+import { buttonColor } from "styles/general";
 
 const blue = css`
-  background-color: #4285f4;
-  border: 1px solid #4285f4;
+  background-color: ${buttonColor};
+  border: 1px solid ${buttonColor};
 
   &:hover {
     background-color: #fff;
-    color: #4285f4;
+    color: ${buttonColor};
   }
 `;
 
 export const LikeBlueButton = css`
-  padding: 15px 25px;
-  font-size: 20px;
+  padding: 12px 25px;
+  font-size: 18px;
   color: #fff;
   cursor: pointer;
   border-radius: 5px;

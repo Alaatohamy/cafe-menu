@@ -7,8 +7,9 @@ import {
   MenuCard,
   CardImg,
   CardData,
-  Price,
-  Type
+  CardName,
+  CardPrice,
+  CardType
 } from "./menu-list.style";
 
 const Menu = () => {
@@ -63,10 +64,10 @@ const Menu = () => {
             <CardImg role="presentation" img={img} />
             <CardData>
               <div>
-                <p>{name}</p>
-                <Type>{type}</Type>
+                <CardName>{name}</CardName>
+                <CardType>{type}</CardType>
               </div>
-              <Price>${price}</Price>
+              <CardPrice>${price}</CardPrice>
             </CardData>
           </MenuCard>
         ))}

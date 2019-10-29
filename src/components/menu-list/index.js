@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAllItems } from "api-functions/menu-list";
+import { getAllItems, deleteItem, editItem } from "api-functions/menu-list";
 import {
   MenuHeader,
   MenuList,
@@ -29,6 +29,11 @@ const Menu = () => {
     })();
   }, []);
 
+  const handleDeleteItem = async id => {
+    await deleteItem(id);
+    setMenuData(await getAllItems());
+  };
+
   return (
     <section>
       <MenuHeader>
@@ -48,10 +53,10 @@ const Menu = () => {
               <EndSection>
                 <CardPrice>${price}</CardPrice>
                 <div>
-                  <Link to="/edit-menu-item">
+                  <Link to={`/edit-menu-item/${key}`}>
                     <EditStyledIcon />
                   </Link>
-                  <DeleteStyledIcon />
+                  <DeleteStyledIcon onClick={() => handleDeleteItem(key)} />
                 </div>
               </EndSection>
             </CardData>

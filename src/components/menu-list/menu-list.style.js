@@ -72,7 +72,10 @@ export const StartSection = styled.div`
 `;
 
 export const CardImg = styled.div`
-  background-color: ${imgDefaultBackgroundColor};
+  background: ${({ img }) => (img ? `url(${img})` : imgDefaultBackgroundColor)};
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   height: 250px;
 `;
 

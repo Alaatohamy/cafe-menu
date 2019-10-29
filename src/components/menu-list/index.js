@@ -9,7 +9,11 @@ import {
   CardData,
   CardName,
   CardPrice,
-  CardType
+  CardType,
+  DeleteStyledIcon,
+  EditStyledIcon,
+  EndSection,
+  StartSection
 } from "./menu-list.style";
 
 const Menu = () => {
@@ -37,11 +41,19 @@ const Menu = () => {
             {/* [TODO] check role */}
             <CardImg role="presentation" img={image} />
             <CardData>
-              <div>
+              <StartSection>
                 <CardName>{name}</CardName>
                 <CardType>{type}</CardType>
-              </div>
-              <CardPrice>${price}</CardPrice>
+              </StartSection>
+              <EndSection>
+                <CardPrice>${price}</CardPrice>
+                <div>
+                  <Link to="/edit-menu-item">
+                    <EditStyledIcon />
+                  </Link>
+                  <DeleteStyledIcon />
+                </div>
+              </EndSection>
             </CardData>
           </MenuCard>
         ))}

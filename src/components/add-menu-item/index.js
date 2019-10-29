@@ -11,13 +11,18 @@ import {
   CustomInput
 } from "./add-menu-item.style";
 
-const AddMenuForm = props => {
-  const [newItem, setNewItem] = useState({});
+const AddMenuForm = ({ history }) => {
+  const [newItem, setNewItem] = useState({
+    name: "",
+    type: "",
+    price: 0,
+    image: ""
+  });
 
   const handleOnSubmit = async e => {
     e.preventDefault();
     await addNewItem(newItem);
-    props.history.push("/");
+    history.push("/");
   };
 
   const handleChange = e => {
@@ -36,8 +41,8 @@ const AddMenuForm = props => {
           <label htmlFor="type">Type</label>
           <CustomSelect name="type" id="type" required onChange={handleChange}>
             <option value="">Choose type</option>
-            <option value="side">Side</option>
-            <option value="main_menu">Main Course</option>
+            <option value="Side">Side</option>
+            <option value="Main Course">Main Course</option>
           </CustomSelect>
         </CustomSelectGroup>
         <InputGroup>
@@ -62,11 +67,11 @@ const AddMenuForm = props => {
           />
         </InputGroup>
         <InputGroup>
-          <label htmlFor="photo">Photo</label>
+          <label htmlFor="image">Photo</label>
           <CustomImgUploader
-            id="photo"
+            id="image"
             type="file"
-            name="photo"
+            name="image"
             onChange={handleChange}
           />
           <CustomButton type="button">Choose photo</CustomButton>

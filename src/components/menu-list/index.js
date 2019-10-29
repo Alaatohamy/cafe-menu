@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { MENU_LIST_DATA } from "./menu-fake-data";
-import { firestore, createCollectionAndDoc } from "firebase-config/utils";
+import { firestore } from "firebase-config/utils";
 import {
   MenuHeader,
   MenuList,
@@ -22,10 +21,6 @@ const Menu = () => {
    */
   useEffect(() => {
     (async () => {
-      // const addData = await createCollectionAndDoc(
-      //   "menu-items",
-      //   MENU_LIST_DATA
-      // );
       const collectionRef = await firestore.collection("menu-items");
       const collectionSnapshot = await collectionRef.get();
       const data = await collectionSnapshot.docs.map(item => ({
@@ -33,7 +28,6 @@ const Menu = () => {
         ...item.data()
       }));
       setMenuData(data);
-      data.map(item => console.log(item));
     })();
   }, []);
 

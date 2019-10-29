@@ -30,5 +30,5 @@ export const deleteItem = async id => {
 
 export const editItem = async (id, newData) => {
   const itemRef = await firestore.doc(`menu-items/${id}`);
-  const itemSnapshot = await itemRef.update(newData);
+  await itemRef.update(newData);
 };

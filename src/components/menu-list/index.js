@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { CustomButton } from "components";
+// import { MENU_LIST_DATA } from "./menu-fake-data";
+import { firestore, createCollectionAndDoc } from "firebase-config/utils";
 import {
   MenuHeader,
   MenuList,
@@ -13,44 +14,29 @@ import {
 } from "./menu-list.style";
 
 const Menu = () => {
-  // [TODO] change it to object
-  const menu_data = [
-    {
-      key: 1,
-      type: "Main Course",
-      name: "Pizza Margherita",
-      img: "",
-      price: "5"
-    },
-    {
-      key: 2,
-      type: "Main Course",
-      name: "Pizza Margherita",
-      img: "",
-      price: "5"
-    },
-    {
-      key: 3,
-      type: "Main Course",
-      name: "Pizza Margherita",
-      img: "",
-      price: "5"
-    },
-    {
-      key: 4,
-      type: "Main Course",
-      name: "Pizza Margherita",
-      img: "",
-      price: "5"
-    },
-    {
-      key: 5,
-      type: "Main Course",
-      name: "Pizza Margherita",
-      img: "",
-      price: "5"
-    }
-  ];
+  const [menuData, setMenuData] = useState([]);
+
+  /**If we use redux management state,
+   * I'll prefer to isolate the side effects and api calls in saga and just call the action here
+   * but no need for this is this small task
+   */
+  useEffect(() => {
+    (async () => {
+      // const addData = await createCollectionAndDoc(
+      //   "menu-items",
+      //   MENU_LIST_DATA
+      // );
+      const collectionRef = await firestore.collection("menu-items");
+      const collectionSnapshot = await collectionRef.get();
+      const data = await collectionSnapshot.docs.map(item => ({
+        key: item.id,
+        ...item.data()
+      }));
+      setMenuData(data);
+      data.map(item => console.log(item));
+    })();
+  }, []);
+
   return (
     <section>
       <MenuHeader>
@@ -58,10 +44,10 @@ const Menu = () => {
         <Link to="/create-new-item">Add Menu Item</Link>
       </MenuHeader>
       <MenuList>
-        {menu_data.map(({ key, name, type, img, price }) => (
+        {menuData.map(({ key, name, type, image, price }) => (
           <MenuCard key={key}>
             {/* [TODO] check role */}
-            <CardImg role="presentation" img={img} />
+            <CardImg role="presentation" img={image} />
             <CardData>
               <div>
                 <CardName>{name}</CardName>

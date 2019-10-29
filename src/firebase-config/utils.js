@@ -18,4 +18,18 @@ firebase.initializeApp(firebaseConfig);
 
 export const firestore = firebase.firestore();
 
+/**Use it for adding demo data by calling it once */
+export const createCollectionAndDoc = async (collectionName, dataToAdd) => {
+  const collectionRef = firestore.collection(collectionName);
+  const batch = firestore.batch();
+  dataToAdd.forEach(element => {
+    const newDoc = collectionRef.doc();
+    batch.set(newDoc, element);
+  });
+  /** Fire batched request
+   * @returns {promise}, void on success, error on fail
+   */
+  return await batch.commit();
+};
+
 export default firebase;

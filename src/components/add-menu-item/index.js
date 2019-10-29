@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CustomButton } from "components";
+import { addNewItem } from "api-functions/menu-list";
 import {
   AddMenuFormSection,
   AddMenuFormWrapper,
@@ -10,12 +11,13 @@ import {
   CustomInput
 } from "./add-menu-item.style";
 
-const AddMenuForm = () => {
+const AddMenuForm = props => {
   const [newItem, setNewItem] = useState({});
 
-  const handleOnSubmit = e => {
+  const handleOnSubmit = async e => {
     e.preventDefault();
-    console.log("newItem", newItem);
+    await addNewItem(newItem);
+    props.history.push("/");
   };
 
   const handleChange = e => {

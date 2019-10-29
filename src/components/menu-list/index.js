@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { firestore } from "firebase-config/utils";
+import { getAllItems } from "api-functions/menu-list";
 import {
   MenuHeader,
   MenuList,
@@ -21,13 +21,7 @@ const Menu = () => {
    */
   useEffect(() => {
     (async () => {
-      const collectionRef = await firestore.collection("menu-items");
-      const collectionSnapshot = await collectionRef.get();
-      const data = await collectionSnapshot.docs.map(item => ({
-        key: item.id,
-        ...item.data()
-      }));
-      setMenuData(data);
+      setMenuData(await getAllItems());
     })();
   }, []);
 

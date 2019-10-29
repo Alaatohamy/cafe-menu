@@ -25,7 +25,7 @@ const EditMenuItem = ({ history, match }) => {
       const oldItem = await getItemData(itemId);
       setUpdatedItem(oldItem);
     })();
-  }, []);
+  }, [itemId]);
 
   const handleOnSubmit = async e => {
     e.preventDefault();

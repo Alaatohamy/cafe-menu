@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { editItem, getItemData } from "api-functions/menu-list";
 import { CustomButton } from "components";
-import { addNewItem } from "api-functions/menu-list";
 import {
   AddMenuFormSection,
   AddMenuFormWrapper,
@@ -9,26 +9,34 @@ import {
   CustomImgUploader,
   CustomSelect,
   CustomInput
-} from "./add-menu-item.style";
+} from "components/add-menu-item/add-menu-item.style";
 
-const AddMenuForm = ({ history }) => {
-  const [newItem, setNewItem] = useState({
+const EditMenuItem = ({ history, match }) => {
+  const itemId = match.params.itemId;
+  const [updatedItem, setUpdatedItem] = useState({
     name: "",
     type: "",
     price: 0,
     image: ""
   });
 
+  useEffect(() => {
+    (async () => {
+      const oldItem = await getItemData(itemId);
+      setUpdatedItem(oldItem);
+    })();
+  }, [itemId]);
+
   const handleOnSubmit = async e => {
     e.preventDefault();
-    await addNewItem(newItem);
+    await editItem(itemId, updatedItem);
     history.push("/");
   };
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setNewItem({
-      ...newItem,
+    setUpdatedItem({
+      ...updatedItem,
       [name]: value
     });
   };
@@ -39,7 +47,13 @@ const AddMenuForm = ({ history }) => {
       <AddMenuFormWrapper onSubmit={handleOnSubmit}>
         <CustomSelectGroup>
           <label htmlFor="type">Type</label>
-          <CustomSelect name="type" id="type" required onChange={handleChange}>
+          <CustomSelect
+            name="type"
+            id="type"
+            required
+            onChange={handleChange}
+            value={updatedItem.type}
+          >
             <option value="">Choose type</option>
             <option value="Side">Side</option>
             <option value="Main Course">Main Course</option>
@@ -51,6 +65,7 @@ const AddMenuForm = ({ history }) => {
             id="name"
             type="text"
             name="name"
+            value={updatedItem.name}
             required
             onChange={handleChange}
           />
@@ -61,6 +76,7 @@ const AddMenuForm = ({ history }) => {
             id="price"
             type="number"
             name="price"
+            value={updatedItem.price}
             required
             min="0"
             onChange={handleChange}
@@ -82,4 +98,4 @@ const AddMenuForm = ({ history }) => {
   );
 };
 
-export default AddMenuForm;
+export default EditMenuItem;

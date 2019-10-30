@@ -1,5 +1,12 @@
 # cafe-menu
 
+- Use the latest version of React 16.10. Use the new React Hooks feature: https://reactjs.org/docs/hooks-intro.html
+- Implement the basic 'menu list' and 'add menu item' form.
+- use hosted backend database (that have free plans) https://firebase.google.com/ (Cloud Firestore database).
+- When a menu item is created, save it to the database.
+- When the browser is reloaded, load the menu list from the database.
+- Add Edit and Delete buttons and functionality.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

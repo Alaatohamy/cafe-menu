@@ -33,6 +33,13 @@ const AddMenuForm = ({ history }) => {
     });
   };
 
+  const handleFileChange = e => {
+    setNewItem({
+      ...newItem,
+      image: e.target.files[0]
+    });
+  };
+
   return (
     <AddMenuFormSection>
       <h2>Add Menu Item</h2>
@@ -72,7 +79,7 @@ const AddMenuForm = ({ history }) => {
             id="image"
             type="file"
             name="image"
-            onChange={handleChange}
+            onChange={handleFileChange}
           />
           <CustomButton type="button">Choose photo</CustomButton>
         </InputGroup>

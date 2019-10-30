@@ -1,9 +1,21 @@
 import { firestore } from "firebase-config/utils";
+import axios from "axios";
 
 export const addNewItem = async newItem => {
-  const collectionRef = await firestore.collection("menu-items");
-  const newItemRef = collectionRef.doc();
-  await newItemRef.set(newItem);
+  const data = new FormData();
+  data.append("file", newItem.image);
+  axios
+    .post("/uploadfile", data)
+    .then(data => {
+      console.log({ data });
+    })
+    .catch(error => {
+      console.log({ error });
+    });
+
+  // const collectionRef = await firestore.collection("menu-items");
+  // const newItemRef = collectionRef.doc();
+  // await newItemRef.set(newItem);
 };
 
 export const getAllItems = async () => {

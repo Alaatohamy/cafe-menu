@@ -9,11 +9,16 @@ function encode(data) {
 }
 
 const getImgAWS = async imageObject => {
-  const awsRes = await axios.post("/getImage", {
-    imgName: imageObject.name
-  });
-  imageObject.src = "data:image/png;base64," + encode(awsRes.data.Body.data);
-  return imageObject;
+  try {
+    const awsRes = await axios.post("/getImage", {
+      imgName: imageObject.name
+    });
+    debugger;
+    imageObject.src = "data:image/png;base64," + encode(awsRes.data.Body.data);
+    return imageObject;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const deleteImgAWS = async imageName => {
@@ -112,9 +117,9 @@ export const editItem = async (id, newData) => {
   const itemRef = await firestore.doc(`menu-items/${id}`);
   const oldItemData = await getMemorizedItem(id);
   if (newData.image.name !== oldItemData.image.name) {
-    //[TODO] Delete old img and upload the new one
     await deleteImgAWS(oldItemData.image.name);
-    var imgKey = await uploadImgAWS(newData.image.file);
+    await uploadImgAWS(newData.image.file);
+    debugger;
     newData = { ...newData, image: { name: newData.image.name } };
   }
   await itemRef.update(newData);

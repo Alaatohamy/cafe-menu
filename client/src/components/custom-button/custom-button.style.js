@@ -17,11 +17,15 @@ export const LikeBlueButton = css`
   color: #fff;
   cursor: pointer;
   border-radius: 5px;
+  ${blue}
 
   &:focus {
     outline: none;
   }
-  ${blue}
+
+  &[disabled] {
+    cursor: wait;
+  }
 `;
 
 export const Button = styled.button`

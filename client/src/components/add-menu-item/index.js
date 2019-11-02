@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CustomButton } from "components";
+import { CustomButton, Spinner } from "components";
 import { addNewItem } from "api-functions/menu-list";
 import {
   AddMenuFormSection,
@@ -19,9 +19,11 @@ const AddMenuForm = ({ history }) => {
     price: 0,
     image: { name: "", src: "", file: {} }
   });
+  const [disabledButton, setDisabledButton] = useState(false);
 
   const handleOnSubmit = async e => {
     e.preventDefault();
+    setDisabledButton(true);
     await addNewItem(newItem);
     history.push("/");
   };
@@ -91,7 +93,7 @@ const AddMenuForm = ({ history }) => {
             <ImgName>{newItem.image.file.name}</ImgName>
           ) : null}
         </InputGroup>
-        <CustomButton>save Item</CustomButton>
+        <CustomButton disabled={disabledButton}>save Item</CustomButton>
       </AddMenuFormWrapper>
     </AddMenuFormSection>
   );

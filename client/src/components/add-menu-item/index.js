@@ -37,7 +37,11 @@ const AddMenuForm = ({ history }) => {
   const handleFileChange = e => {
     setNewItem({
       ...newItem,
-      image: { ...newItem.image, file: e.target.files[0] }
+      image: {
+        ...newItem.image,
+        file: e.target.files[0],
+        name: e.target.files[0].name
+      }
     });
   };
 

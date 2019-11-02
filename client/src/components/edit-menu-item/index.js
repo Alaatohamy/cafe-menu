@@ -25,7 +25,6 @@ const EditMenuItem = ({ history, match }) => {
   useEffect(() => {
     (async () => {
       const oldItem = await getItemData(itemId);
-      console.log("useEffect", oldItem);
       setUpdatedItem(oldItem);
     })();
   }, [itemId]);

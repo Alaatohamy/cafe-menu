@@ -52,14 +52,21 @@ app.post("/uploadfile", upload.single("file"), function(req, res, next) {
   res.send(req.file);
 });
 
-app.post("/getImage", function(req, res) {
-  var params = {
-    Bucket: process.env.AWS_BUCKET_NAME,
-    Key: req.body.imgName
-  };
+const singleImgParams = imageName => ({
+  Bucket: process.env.AWS_BUCKET_NAME,
+  Key: imageName
+});
 
-  s3.getObject(params, function(err, data) {
+app.post("/getImage", function(req, res) {
+  s3.getObject(singleImgParams(req.body.imgName), function(err, data) {
     if (err) res.status(500).send(err, err.stack);
     else res.status(200).send(data); // successful response
+  });
+});
+
+app.post("/deleteImg", function(req, res) {
+  s3.deleteObject(singleImgParams(req.body.imgName), function(err, data) {
+    if (err) res.send(500, err, err.stack);
+    else res.send(200, data);
   });
 });

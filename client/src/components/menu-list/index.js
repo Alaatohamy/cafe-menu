@@ -46,9 +46,11 @@ const Menu = () => {
           ? menuData.map(({ key, name, type, image, price }) => (
               <MenuCard key={key}>
                 {/* [TODO] check role */}
-                <CardImg>
-                  <img src={image.src} alt={image.name} />
-                </CardImg>
+                <CardImg
+                  img={image.src}
+                  title={image.name}
+                  role="presentation"
+                ></CardImg>
                 <CardData>
                   <StartSection>
                     <CardName>{name}</CardName>

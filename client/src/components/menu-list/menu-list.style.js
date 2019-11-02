@@ -77,11 +77,6 @@ export const CardImg = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   height: 250px;
-
-  img {
-    height: inherit;
-    width: 100%;
-  }
 `;
 
 export const CardName = styled.p`

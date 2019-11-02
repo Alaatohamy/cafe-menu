@@ -59,14 +59,14 @@ const singleImgParams = imageName => ({
 
 app.post("/getImage", function(req, res) {
   s3.getObject(singleImgParams(req.body.imgName), function(err, data) {
-    if (err) res.status(500).send(err, err.stack);
-    else res.status(200).send(data); // successful response
+    if (err || res.data === 500) res.send(500, err, err.stack);
+    else res.send(200, data);
   });
 });
 
 app.post("/deleteImg", function(req, res) {
   s3.deleteObject(singleImgParams(req.body.imgName), function(err, data) {
-    if (err) res.send(500, err, err.stack);
+    if (err || res.data === 500) res.send(500, err, err.stack);
     else res.send(200, data);
   });
 });

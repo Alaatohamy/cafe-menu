@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Spinner } from "components";
 import {
   MenuCard,
   CardImg,
@@ -13,7 +14,16 @@ import {
   StartSection
 } from "components/menu-list/menu-list.style";
 
-const MenuItem = ({ id, name, type, image, price, handleDeleteItem }) => {
+const MenuItem = ({
+  id,
+  name,
+  type,
+  image,
+  price,
+  handleDeleteItem,
+  itemIsLoading,
+  clickedItem
+}) => {
   return (
     <MenuCard>
       {
@@ -34,7 +44,11 @@ const MenuItem = ({ id, name, type, image, price, handleDeleteItem }) => {
             <Link to={`/edit-menu-item/${id}`}>
               <EditStyledIcon />
             </Link>
-            <DeleteStyledIcon onClick={() => handleDeleteItem(id)} />
+            {itemIsLoading && id === clickedItem ? (
+              <Spinner item={true} />
+            ) : (
+              <DeleteStyledIcon onClick={() => handleDeleteItem(id)} />
+            )}
           </div>
         </EndSection>
       </CardData>

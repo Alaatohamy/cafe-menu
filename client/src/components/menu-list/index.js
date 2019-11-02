@@ -8,6 +8,8 @@ import { MenuHeader, MenuList } from "./menu-list.style";
 const Menu = () => {
   const [menuData, setMenuData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [itemIsLoading, setItemIsLoading] = useState(false);
+  const [clickedItem, setClickedItem] = useState(null);
 
   /**If we use redux management state,
    * I'll prefer to isolate the side effects and api calls in saga and just call the action here
@@ -18,12 +20,16 @@ const Menu = () => {
       await setMenuData(await getAllItems());
       setIsLoading(false);
     })();
-  }, []);
+  }, [itemIsLoading]);
 
   const handleDeleteItem = id => {
+    setItemIsLoading(true);
+    setClickedItem(id);
     (async () => {
       await deleteItem(id);
-      setMenuData(await getAllItems());
+      const newItems = menuData.filter(item => item.id !== id);
+      await setMenuData(newItems);
+      setItemIsLoading(false);
     })();
   };
 
@@ -42,6 +48,8 @@ const Menu = () => {
             <MenuItem
               key={key}
               id={key}
+              itemIsLoading={itemIsLoading}
+              clickedItem={clickedItem}
               {...otherProps}
               handleDeleteItem={handleDeleteItem}
             />

@@ -84,3 +84,7 @@ export const CustomImgUploader = styled.input`
   position: absolute;
   cursor: pointer;
 `;
+
+export const ImgName = styled.span`
+  margin-inline-start: 10px;
+`;

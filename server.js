@@ -4,13 +4,15 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const compression = require("compression");
 const multer = require("multer");
+const aws = require("aws-sdk");
+const multerS3 = require("multer-s3");
 
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 aws.config.update({
   secretAccessKey: process.env.AWS_SECRETE_ACCESS_KEY,
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  region: "eu-west-2"
+  region: process.env.AWS_REGION
 });
 
 const app = express();
@@ -34,24 +36,30 @@ app.listen(port, error => {
   console.log("Server is running on port " + port);
 });
 
-var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "client/public");
-  },
-  filename: function(req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  }
+var upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    key: function(req, file, cb) {
+      console.log(file);
+      cb(null, file.originalname); //use Date.now() for unique file keys
+    }
+  })
 });
 
-var upload = multer({ storage: storage }).single("file");
+//use by upload form
+app.post("/uploadfile", upload.single("file"), function(req, res, next) {
+  res.send(req.file);
+});
 
-app.post("/uploadfile", (req, res, next) => {
-  upload(req, res, function(err) {
-    if (err instanceof multer.MulterError) {
-      return res.status(500).json(err);
-    } else if (err) {
-      return res.status(500).json(err);
-    }
-    return res.status(200).send(req.file);
+app.post("/getImage", function(req, res) {
+  var params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: req.body.imgName
+  };
+
+  s3.getObject(params, function(err, data) {
+    if (err) res.status(500).send(err, err.stack);
+    else res.status(200).send(data); // successful response
   });
 });

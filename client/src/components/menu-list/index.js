@@ -34,6 +34,7 @@ const Menu = () => {
     setMenuData(await getAllItems());
   };
 
+  console.log({ menuData });
   return (
     <section>
       <MenuHeader>
@@ -41,27 +42,31 @@ const Menu = () => {
         <Link to="/create-new-item">Add Menu Item</Link>
       </MenuHeader>
       <MenuList>
-        {menuData.map(({ key, name, type, image, price }) => (
-          <MenuCard key={key}>
-            {/* [TODO] check role */}
-            <CardImg role="presentation" img={image} />
-            <CardData>
-              <StartSection>
-                <CardName>{name}</CardName>
-                <CardType>{type}</CardType>
-              </StartSection>
-              <EndSection>
-                <CardPrice>${price}</CardPrice>
-                <div>
-                  <Link to={`/edit-menu-item/${key}`}>
-                    <EditStyledIcon />
-                  </Link>
-                  <DeleteStyledIcon onClick={() => handleDeleteItem(key)} />
-                </div>
-              </EndSection>
-            </CardData>
-          </MenuCard>
-        ))}
+        {menuData
+          ? menuData.map(({ key, name, type, image, price }) => (
+              <MenuCard key={key}>
+                {/* [TODO] check role */}
+                <CardImg>
+                  <img src={image.src} alt={image.name} />
+                </CardImg>
+                <CardData>
+                  <StartSection>
+                    <CardName>{name}</CardName>
+                    <CardType>{type}</CardType>
+                  </StartSection>
+                  <EndSection>
+                    <CardPrice>${price}</CardPrice>
+                    <div>
+                      <Link to={`/edit-menu-item/${key}`}>
+                        <EditStyledIcon />
+                      </Link>
+                      <DeleteStyledIcon onClick={() => handleDeleteItem(key)} />
+                    </div>
+                  </EndSection>
+                </CardData>
+              </MenuCard>
+            ))
+          : null}
       </MenuList>
     </section>
   );

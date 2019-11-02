@@ -8,7 +8,8 @@ import {
   CustomSelectGroup,
   CustomImgUploader,
   CustomSelect,
-  CustomInput
+  CustomInput,
+  ImgName
 } from "./add-menu-item.style";
 
 const AddMenuForm = ({ history }) => {
@@ -16,7 +17,7 @@ const AddMenuForm = ({ history }) => {
     name: "",
     type: "",
     price: 0,
-    image: ""
+    image: { name: "", src: "", file: {} }
   });
 
   const handleOnSubmit = async e => {
@@ -36,7 +37,7 @@ const AddMenuForm = ({ history }) => {
   const handleFileChange = e => {
     setNewItem({
       ...newItem,
-      image: e.target.files[0]
+      image: { ...newItem.image, file: e.target.files[0] }
     });
   };
 
@@ -82,6 +83,9 @@ const AddMenuForm = ({ history }) => {
             onChange={handleFileChange}
           />
           <CustomButton type="button">Choose photo</CustomButton>
+          {newItem.image.file ? (
+            <ImgName>{newItem.image.file.name}</ImgName>
+          ) : null}
         </InputGroup>
         <CustomButton>save Item</CustomButton>
       </AddMenuFormWrapper>

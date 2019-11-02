@@ -114,7 +114,7 @@ const EditMenuItem = ({ history, match }) => {
             />
             <CustomButton type="button">Choose photo</CustomButton>
             <ImgName>{updatedItem.image.name}</ImgName>
-            <ThumbnailImg src={updatedItem.image.src} />
+            <ThumbnailImg img={updatedItem.image.src} />
           </InputGroup>
           <CustomButton disabled={disabledButton}>save Item</CustomButton>
         </AddMenuFormWrapper>

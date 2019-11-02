@@ -16,6 +16,22 @@ const getImgAWS = async imageObject => {
   return imageObject;
 };
 
+const deleteImgAWS = async imageName => {
+  const awsRes = await axios.post("/deleteImg", {
+    imgName: imageName
+  });
+  return awsRes;
+};
+
+const uploadImgAWS = async imageObject => {
+  const imageData = new FormData();
+  imageData.append("file", imageObject);
+  const {
+    data: { key }
+  } = await axios.post("/uploadfile", imageData);
+  return key;
+};
+
 var cacheId = {};
 const getMemorizedItem = async id => {
   if (id in cacheId) {
@@ -29,16 +45,23 @@ const getMemorizedItem = async id => {
   }
 };
 
+const createUniqImgKey = imageName => {
+  const imageArray = imageName.split(".");
+  imageName =
+    imageArray[0] +
+    "_" +
+    Math.random()
+      .toString(36)
+      .substr(2, 9) +
+    "." +
+    imageArray[1];
+  return imageName;
+};
+
 export const addNewItem = async newItem => {
   try {
-    const imageData = new FormData();
-    imageData.append("file", newItem.image.file);
-    var imgKey = "";
     if (newItem.image.name) {
-      const {
-        data: { key }
-      } = await axios.post("/uploadfile", imageData);
-      imgKey = key;
+      var imgKey = await uploadImgAWS(newItem.image.file);
     }
     const collectionRef = await firestore.collection("menu-items");
     const newItemRef = collectionRef.doc();
@@ -54,19 +77,20 @@ export const addNewItem = async newItem => {
 export const getAllItems = async () => {
   const collectionRef = await firestore.collection("menu-items");
   const collectionSnapshot = await collectionRef.get();
-  //[TODO] add individual item.imageData inside map
   const allItemsDoc = await collectionSnapshot.docs;
   if (allItemsDoc.length !== 0) {
-    var img = await getImgAWS({ name: "fries.jpeg", src: "", file: {} });
   }
-  const allItems = allItemsDoc.map(item => {
-    const itemData = item.data();
-    return {
-      ...itemData,
-      image: !!allItemsDoc.length ? img : itemData.image,
-      key: item.id
-    };
-  });
+  const allItems = await Promise.all(
+    allItemsDoc.map(async item => {
+      const itemData = item.data();
+      var img = await getImgAWS(itemData.image);
+      return {
+        ...itemData,
+        image: !!allItemsDoc.length ? img : itemData.image,
+        key: item.id
+      };
+    })
+  );
   return allItems;
 };
 
@@ -79,9 +103,7 @@ export const getItemData = async id => {
 export const deleteItem = async id => {
   const itemRef = await firestore.doc(`menu-items/${id}`);
   const itemData = await getMemorizedItem(id);
-  const awsRes = await axios.post("/deleteImg", {
-    imgName: itemData.image.name
-  });
+  const awsRes = await deleteImgAWS(itemData.image.name);
   console.log({ awsRes });
   await itemRef.delete();
 };
@@ -91,6 +113,8 @@ export const editItem = async (id, newData) => {
   const oldItemData = await getMemorizedItem(id);
   if (newData.image.name !== oldItemData.image.name) {
     //[TODO] Delete old img and upload the new one
+    await deleteImgAWS(oldItemData.image.name);
+    var imgKey = await uploadImgAWS(newData.image.file);
     newData = { ...newData, image: { name: newData.image.name } };
   }
   await itemRef.update(newData);

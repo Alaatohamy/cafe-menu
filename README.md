@@ -2,10 +2,29 @@
 
 - Use the latest version of React 16.10. Use the new React Hooks feature: https://reactjs.org/docs/hooks-intro.html
 - Implement the basic 'menu list' and 'add menu item' form.
-- use hosted backend database (that have free plans) https://firebase.google.com/ (Cloud Firestore database).
+- Use hosted backend database (that have free plans) https://firebase.google.com/ (Cloud Firestore database).
 - When a menu item is created, save it to the database.
 - When the browser is reloaded, load the menu list from the database.
 - Add Edit and Delete buttons and functionality.
+- Use S3 bucket to handle the menu images and async them with firestore data.
+  - Uploading image.
+  - Get images.
+  - Delete image.
+  - Update image.
+- Use "s3:DeleteObject", "s3:GetObject" to handle these actions:
+  - get private image from s3 bucket.
+  - delete private image from s3 bucket.
+  - update private image from s3 bucket.
+- Use Nodejs server to work as proxy to handel private configurations of aws s3.
+- use Streaming multer storage engine for AWS S3 (multer-s3).
+- use node.js middleware for handling multipart/form-data, which is primarily used for uploading files (multer).
+- Use aws ask to access data in private bucket and set aws configurations (aws-sdk).
+- Handle loading state on these actions:
+  - Get all items from firestore and there images accordingly from aws s3 bucket.
+  - Delete menu item data fro firestore and its image from aws s3 bucket.
+  - Get one item data on edit form from firestore and its image from aws s3 bucket.
+- Disable buttons on these states:
+  - After one click on submit button of edit and Create new item form (save item), and adding loading cursor.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

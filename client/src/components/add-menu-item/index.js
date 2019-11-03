@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { editItem, getItemData } from "api-functions/menu-list";
+import React, { useState } from "react";
 import { CustomButton } from "components";
+import { addNewItem } from "api-functions/menu-list/menu-list.actions";
+import { ITEM_INIT_STATE } from "api-functions/menu-list/utils";
 import {
   AddMenuFormSection,
   AddMenuFormWrapper,
@@ -8,36 +9,37 @@ import {
   CustomSelectGroup,
   CustomImgUploader,
   CustomSelect,
-  CustomInput
-} from "components/add-menu-item/add-menu-item.style";
+  CustomInput,
+  ImgName
+} from "./add-menu-item.style";
 
-const EditMenuItem = ({ history, match }) => {
-  const itemId = match.params.itemId;
-  const [updatedItem, setUpdatedItem] = useState({
-    name: "",
-    type: "",
-    price: 0,
-    image: ""
-  });
-
-  useEffect(() => {
-    (async () => {
-      const oldItem = await getItemData(itemId);
-      setUpdatedItem(oldItem);
-    })();
-  }, [itemId]);
+const AddMenuForm = ({ history }) => {
+  const [newItem, setNewItem] = useState(ITEM_INIT_STATE);
+  const [disabledButton, setDisabledButton] = useState(false);
 
   const handleOnSubmit = async e => {
     e.preventDefault();
-    await editItem(itemId, updatedItem);
+    setDisabledButton(true);
+    await addNewItem(newItem);
     history.push("/");
   };
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setUpdatedItem({
-      ...updatedItem,
+    setNewItem({
+      ...newItem,
       [name]: value
+    });
+  };
+
+  const handleFileChange = e => {
+    setNewItem({
+      ...newItem,
+      image: {
+        ...newItem.image,
+        file: e.target.files[0],
+        name: e.target.files[0].name
+      }
     });
   };
 
@@ -47,13 +49,7 @@ const EditMenuItem = ({ history, match }) => {
       <AddMenuFormWrapper onSubmit={handleOnSubmit}>
         <CustomSelectGroup>
           <label htmlFor="type">Type</label>
-          <CustomSelect
-            name="type"
-            id="type"
-            required
-            onChange={handleChange}
-            value={updatedItem.type}
-          >
+          <CustomSelect name="type" id="type" required onChange={handleChange}>
             <option value="">Choose type</option>
             <option value="Side">Side</option>
             <option value="Main Course">Main Course</option>
@@ -65,7 +61,6 @@ const EditMenuItem = ({ history, match }) => {
             id="name"
             type="text"
             name="name"
-            value={updatedItem.name}
             required
             onChange={handleChange}
           />
@@ -76,7 +71,6 @@ const EditMenuItem = ({ history, match }) => {
             id="price"
             type="number"
             name="price"
-            value={updatedItem.price}
             required
             min="0"
             onChange={handleChange}
@@ -88,14 +82,17 @@ const EditMenuItem = ({ history, match }) => {
             id="image"
             type="file"
             name="image"
-            onChange={handleChange}
+            onChange={handleFileChange}
           />
           <CustomButton type="button">Choose photo</CustomButton>
+          {newItem.image.file ? (
+            <ImgName>{newItem.image.file.name}</ImgName>
+          ) : null}
         </InputGroup>
-        <CustomButton>save Item</CustomButton>
+        <CustomButton disabled={disabledButton}>save Item</CustomButton>
       </AddMenuFormWrapper>
     </AddMenuFormSection>
   );
 };
 
-export default EditMenuItem;
+export default AddMenuForm;

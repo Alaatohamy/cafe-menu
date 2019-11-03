@@ -1,5 +1,9 @@
 # cafe-menu
 
+You can find deployed version now on Heroku server on this [Link](https://cafe-menu.herokuapp.com/).
+
+## Info about this project
+
 - Use the latest version of React 16.10. Use the new React Hooks feature: https://reactjs.org/docs/hooks-intro.html
 - Implement the basic 'menu list' and 'add menu item' form.
 - Use hosted backend database (that have free plans) https://firebase.google.com/ (Cloud Firestore database).

@@ -1,6 +1,8 @@
 # cafe-menu
 
 You can find deployed version now on Heroku server on this [Link](https://cafe-menu.herokuapp.com/).
+This web application is a list of restaurant/cafe menu items.
+You can add, edit delete item to this list menu items.
 
 ## Info about this project
 

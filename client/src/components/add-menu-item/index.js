@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { CustomButton, Spinner } from "components";
-import { addNewItem } from "api-functions/menu-list";
+import { CustomButton } from "components";
+import { addNewItem } from "api-functions/menu-list/menu-list.actions";
+import { ITEM_INIT_STATE } from "api-functions/menu-list/utils";
 import {
   AddMenuFormSection,
   AddMenuFormWrapper,
@@ -13,12 +14,7 @@ import {
 } from "./add-menu-item.style";
 
 const AddMenuForm = ({ history }) => {
-  const [newItem, setNewItem] = useState({
-    name: "",
-    type: "",
-    price: 0,
-    image: { name: "", src: "", file: {} }
-  });
+  const [newItem, setNewItem] = useState(ITEM_INIT_STATE);
   const [disabledButton, setDisabledButton] = useState(false);
 
   const handleOnSubmit = async e => {

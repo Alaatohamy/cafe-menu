@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { editItem, getItemData } from "api-functions/menu-list";
+import {
+  editItem,
+  getItemData
+} from "api-functions/menu-list/menu-list.actions";
+import { ITEM_INIT_STATE } from "api-functions/menu-list/utils";
+
 import { CustomButton } from "components";
 import { Spinner } from "components";
 import {
@@ -16,12 +21,7 @@ import { ThumbnailImg } from "./edit-menu-item.style";
 
 const EditMenuItem = ({ history, match }) => {
   const itemId = match.params.itemId;
-  const [updatedItem, setUpdatedItem] = useState({
-    name: "",
-    type: "",
-    price: 0,
-    image: { name: "", src: "", file: {} }
-  });
+  const [updatedItem, setUpdatedItem] = useState(ITEM_INIT_STATE);
   const [disabledButton, setDisabledButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 

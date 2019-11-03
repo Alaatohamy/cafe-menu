@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAllItems, deleteItem } from "api-functions/menu-list";
+import {
+  getAllItems,
+  deleteItem
+} from "api-functions/menu-list/menu-list.actions";
 import MenuItem from "components/menu-item";
 import { Spinner } from "components";
 import { MenuHeader, MenuList } from "./menu-list.style";

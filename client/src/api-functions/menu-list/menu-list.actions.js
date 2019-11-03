@@ -1,67 +1,6 @@
 import { firestore } from "firebase-config/utils";
-import axios from "axios";
-
-function encode(data) {
-  var str = data.reduce(function(a, b) {
-    return a + String.fromCharCode(b);
-  }, "");
-  return btoa(str).replace(/.{76}(?=.)/g, "$&\n");
-}
-
-const getImgAWS = async imageObject => {
-  try {
-    const awsRes = await axios.post("/getImage", {
-      imgName: imageObject.name
-    });
-    debugger;
-    imageObject.src = "data:image/png;base64," + encode(awsRes.data.Body.data);
-    return imageObject;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const deleteImgAWS = async imageName => {
-  const awsRes = await axios.post("/deleteImg", {
-    imgName: imageName
-  });
-  return awsRes;
-};
-
-const uploadImgAWS = async imageObject => {
-  const imageData = new FormData();
-  imageData.append("file", imageObject);
-  const {
-    data: { key }
-  } = await axios.post("/uploadfile", imageData);
-  return key;
-};
-
-var cacheId = {};
-const getMemorizedItem = async id => {
-  if (id in cacheId) {
-    return cacheId[id];
-  } else {
-    const itemRef = await firestore.doc(`menu-items/${id}`);
-    const itemSnapshot = await itemRef.get();
-    const itemData = itemSnapshot.data();
-    cacheId = { ...cacheId, [id]: itemData };
-    return itemData;
-  }
-};
-
-const createUniqImgKey = imageName => {
-  const imageArray = imageName.split(".");
-  imageName =
-    imageArray[0] +
-    "_" +
-    Math.random()
-      .toString(36)
-      .substr(2, 9) +
-    "." +
-    imageArray[1];
-  return imageName;
-};
+import { uploadImgAWS, getImgAWS, deleteImgAWS } from "./aws-actions";
+import { getMemorizedItem } from "./utils";
 
 export const addNewItem = async newItem => {
   try {
@@ -119,7 +58,6 @@ export const editItem = async (id, newData) => {
   if (newData.image.name !== oldItemData.image.name) {
     await deleteImgAWS(oldItemData.image.name);
     await uploadImgAWS(newData.image.file);
-    debugger;
     newData = { ...newData, image: { name: newData.image.name } };
   }
   await itemRef.update(newData);

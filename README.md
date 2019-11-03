@@ -26,6 +26,11 @@
 - Disable buttons on these states:
   - After one click on submit button of edit and Create new item form (save item), and adding loading cursor.
 
+### Todo list
+
+- Display errors when it occurs instead of console it.
+- Check better solutions for performance.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

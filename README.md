@@ -36,6 +36,8 @@ You can add, edit delete item to this list menu items.
 
 - Display errors when it occurs instead of console it.
 - Check better solutions for performance.
+- Dockerizing the app.
+- Testing all logic functions with jest.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
